@@ -1,4 +1,15 @@
-import { Controller, Get, Post, Delete, Put, Body } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Delete,
+  Put,
+  Body,
+  Param,
+  ConflictException,
+  NotFoundException,
+  HttpCode,
+} from '@nestjs/common';
 import { TasksService } from './tasks.service';
 import { CreateTaskDto } from 'src/dto/task/create-task.dto';
 import { UpdateTaskDto } from 'src/dto/task/update-task.dto';
@@ -13,23 +24,42 @@ export class TasksController {
   }
 
   @Get(':id')
-  async find(id: string) {
-    return await this.taskService.findOne(id);
+  async find(@Param('id') id: string) {
+    const taskFound = await this.taskService.findOne(id);
+
+    if (!taskFound) throw new NotFoundException('Task not found');
+
+    return taskFound;
   }
 
   @Post()
   async create(@Body() createTask: CreateTaskDto) {
-    console.log({createTask})
-    // return await this.taskService.create(createTask);
+    try {
+      return await this.taskService.create(createTask);
+    } catch (error) {
+      if (error.code === 11000) {
+        throw new ConflictException('Task already exists');
+      }
+      throw error;
+    }
   }
 
   @Delete(':id')
-  async delete(id: string) {
-    return await this.taskService.delete(id);
+  @HttpCode(204)
+  async delete(@Param('id') id: string) {
+    const deletedTask = await this.taskService.delete(id);
+
+    if (!deletedTask) throw new NotFoundException('Task not found');
+
+    return deletedTask;
   }
 
   @Put(':id')
-  async update(id: string, task: UpdateTaskDto) {
-    return await this.taskService.update(id, task);
+  async update(@Param('id') id: string, @Body() task: UpdateTaskDto) {
+    const updatedTask = await this.taskService.update(id, task);
+
+    if (!updatedTask) throw new NotFoundException('Task not found');
+
+    return updatedTask;
   }
 }

@@ -1,4 +1,6 @@
 import { Schema, Prop, SchemaFactory } from '@nestjs/mongoose';
+import * as mongoose from 'mongoose';
+import { User } from '../types/user.type';
 
 @Schema({
   timestamps: true,
@@ -14,6 +16,9 @@ export class Task {
 
   @Prop({ default: false })
   done: boolean;
+
+  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'User' })
+  user: User;
 }
 
 export const TaskSchema = SchemaFactory.createForClass(Task);
