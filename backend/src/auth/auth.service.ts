@@ -7,8 +7,6 @@ export class AuthService {
   constructor(private readonly usersService: UsersService) {}
 
   async signup(createUser: CreateUserDto) {
-    const foundUser = await this.usersService.findOneByIdentifier()
-
     const createdUser = await this.usersService.create(createUser);
 
     return createdUser;
