@@ -13,6 +13,11 @@ export class UsersService {
     return await this.userModel.find();
   }
 
+  async findOne(userId: string): Promise<User>{
+    const user = await this.userModel.findById(userId)
+    return user
+  }
+
   async findOneByIdentifier(identifier: string): Promise<User | undefined> {
     const query = {
       $or: [
@@ -29,6 +34,9 @@ export class UsersService {
   async create(createUser: CreateUserDto): Promise<User | undefined> {
     const newUser = new this.userModel(createUser);
 
-    return await newUser.save();
+    return newUser
+
+    return undefined
+    // return await newUser.save();
   }
 }
