@@ -7,7 +7,7 @@ import {
   Post,
   Res,
 } from '@nestjs/common';
-import { Response } from 'express';
+import { FastifyReply } from 'fastify';
 import { CreateUserDto } from 'src/dto/user/create-user.dto';
 import { AuthService } from './auth.service';
 
@@ -18,16 +18,16 @@ export class AuthController {
   @Post('signup')
   async signup(
     @Body() createUser: CreateUserDto,
-    @Res() res: Response,
-  ): Promise<Response> {
+    @Res() res: FastifyReply,
+  ): Promise<FastifyReply> {
     try {
       const createdUser = await this.authService.signup(createUser);
 
-      return res.status(HttpStatus.OK).json({ createdUser });
+      return res.code(HttpStatus.OK).send({ createdUser });
     } catch (error) {
       return res
-        .status(HttpStatus.INTERNAL_SERVER_ERROR)
-        .json({ message: error.message });
+        .code(HttpStatus.INTERNAL_SERVER_ERROR)
+        .send({ message: error.message });
     }
   }
 }

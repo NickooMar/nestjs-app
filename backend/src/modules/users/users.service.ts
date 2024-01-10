@@ -18,7 +18,8 @@ export class UsersService {
   ) {}
 
   async findAll() {
-    return await this.userModel.find();
+    const select = { email: 1, username: 1, created_at: 1 };
+    return await this.userModel.find({}, select);
   }
 
   async findOne(userId: string): Promise<User> {
@@ -58,32 +59,13 @@ export class UsersService {
 
       const hashedPassword = await bcrypt.hash(password, 10);
 
-      const createdUser = await this.userModel.create({
+      const createdUser = new this.userModel({
         email,
         username,
         password: hashedPassword,
       });
 
-      
-
-
-
-      return 
+      return await createdUser.save({ session });
     });
-
-    // let transactionSession = await this.connection.startSession();
-
-    // try {
-    //   transactionSession.startTransaction();
-    //   const newUser = new this.userModel(createUser);
-
-    //   return newUser;
-    //   // return await newUser.save();
-    // } catch (error) {
-    //   await transactionSession.abortTransaction();
-    //   throw error;
-    // } finally {
-    //   await transactionSession.endSession();
-    // }
   }
 }

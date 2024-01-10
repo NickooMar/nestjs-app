@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Task } from '../schemas/task.schema';
+import { Task } from '../../schemas/task.schema';
 import { Model } from 'mongoose';
 import { CreateTaskDto } from 'src/dto/task/create-task.dto';
 import { UpdateTaskDto } from 'src/dto/task/update-task.dto';
