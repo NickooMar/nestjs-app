@@ -1,9 +1,7 @@
 import {
   Body,
-  ConflictException,
   Controller,
   HttpStatus,
-  Injectable,
   Post,
   Res,
 } from '@nestjs/common';
@@ -25,6 +23,7 @@ export class AuthController {
 
       return res.code(HttpStatus.OK).send({ createdUser });
     } catch (error) {
+      console.log({error})
       return res
         .code(HttpStatus.INTERNAL_SERVER_ERROR)
         .send({ message: error.message });
