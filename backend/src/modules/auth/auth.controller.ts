@@ -1,12 +1,7 @@
-import {
-  Body,
-  Controller,
-  HttpStatus,
-  Post,
-  Res,
-} from '@nestjs/common';
+import { Body, Controller, HttpStatus, Post, Res } from '@nestjs/common';
 import { FastifyReply } from 'fastify';
 import { CreateUserDto } from 'src/dto/user/create-user.dto';
+import { SignInUserDto } from 'src/dto/user/signin-user.dto';
 import { AuthService } from './auth.service';
 
 @Controller('auth')
@@ -23,7 +18,21 @@ export class AuthController {
 
       return res.code(HttpStatus.OK).send({ createdUser });
     } catch (error) {
-      console.log({error})
+      return res
+        .code(HttpStatus.INTERNAL_SERVER_ERROR)
+        .send({ message: error.message });
+    }
+  }
+
+  @Post('signin')
+  async signin(
+    @Body() user: SignInUserDto,
+    @Res() res: FastifyReply,
+  ): Promise<FastifyReply> {
+    try {
+
+      return res.code(HttpStatus.OK).send({ message: 'signin' });
+    } catch (error) {
       return res
         .code(HttpStatus.INTERNAL_SERVER_ERROR)
         .send({ message: error.message });
