@@ -30,8 +30,9 @@ export class AuthController {
     @Res() res: FastifyReply,
   ): Promise<FastifyReply> {
     try {
+      const access_token = await this.authService.signin(user);
 
-      return res.code(HttpStatus.OK).send({ message: 'signin' });
+      return res.code(HttpStatus.OK).send(access_token);
     } catch (error) {
       return res
         .code(HttpStatus.INTERNAL_SERVER_ERROR)

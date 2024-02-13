@@ -30,8 +30,12 @@ export class UsersService {
   async findOneByIdentifier(identifier: string): Promise<User | undefined> {
     const select = { email: 1, username: 1, created_at: 1 };
     const query = { $or: [{ email: identifier }, { username: identifier }] };
-    
+
     return await this.userModel.findOne(query, select);
+  }
+
+  async findOneSingingIn(userEmail: string): Promise<User | undefined> {
+    return await this.userModel.findOne({ email: userEmail });
   }
 
   async create(createUser: CreateUserDto): Promise<User | undefined> {
