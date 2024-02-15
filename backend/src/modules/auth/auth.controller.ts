@@ -1,8 +1,18 @@
-import { Body, Controller, HttpStatus, Post, Res } from '@nestjs/common';
-import { FastifyReply } from 'fastify';
+import {
+  Body,
+  Controller,
+  Get,
+  HttpStatus,
+  Post,
+  Request,
+  Res,
+  UseGuards,
+} from '@nestjs/common';
+import { FastifyReply, FastifyRequest } from 'fastify';
 import { CreateUserDto } from 'src/dto/user/create-user.dto';
 import { SignInUserDto } from 'src/dto/user/signin-user.dto';
 import { AuthService } from './auth.service';
+import { AuthGuard } from './auth.guard';
 
 @Controller('auth')
 export class AuthController {
@@ -38,5 +48,11 @@ export class AuthController {
         .code(HttpStatus.INTERNAL_SERVER_ERROR)
         .send({ message: error.message });
     }
+  }
+
+  @UseGuards(AuthGuard)
+  @Get('profile')
+  async getProfile(@Request() req) {
+    return req.user;
   }
 }
