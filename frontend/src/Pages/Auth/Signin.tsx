@@ -3,6 +3,7 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { Link } from "react-router-dom";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
+import useAuth from "../../Hooks/useAuth";
 
 type Inputs = {
   email: string;
@@ -10,16 +11,23 @@ type Inputs = {
 };
 
 const Signin = () => {
+  const { handleSigning } = useAuth();
+
   const {
     register,
     handleSubmit,
+    trigger,
     formState: { errors },
   } = useForm<Inputs>();
 
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
-  const onSubmit: SubmitHandler<Inputs> = (data) => console.log(data);
+  const onSubmit: SubmitHandler<Inputs> = async (data) => {
+    setIsLoading(true);
+    await handleSigning(data);
+    setIsLoading(false);
+  };
 
   return (
     <div className="flex items-center justify-center h-screen bg-rose-500 dark:bg-[#111827]">
@@ -41,14 +49,27 @@ const Signin = () => {
               Your email
             </label>
             <input
-              {...register("email", { required: true })}
+              {...register("email", {
+                required: "Email is required",
+                pattern: {
+                  value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                  message: "Invalid email address",
+                },
+              })}
+              id="email"
               type="email"
               name="email"
-              id="email"
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
               placeholder="name@company.com"
-              required
+              required={true}
+              onError={errors.email ? () => {} : undefined}
+              onKeyUp={() => {
+                trigger("email");
+              }}
             />
+            {errors.email && (
+              <small className="text-red-500">{errors.email.message}</small>
+            )}
           </div>
           <div className="relative">
             <label
@@ -58,13 +79,17 @@ const Signin = () => {
               Your password
             </label>
             <input
-              {...register("password", { required: true })}
+              {...register("password", {
+                required: "You must specify a password",
+              })}
               type={showPassword ? "text" : "password"}
               name="password"
               id="password"
               placeholder="••••••••"
+              autoComplete="off"
+              maxLength={20}
+              required={true}
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-              required
             />
             <div
               onClick={() => setShowPassword(!showPassword)}
@@ -96,7 +121,7 @@ const Signin = () => {
             <button
               disabled
               type="button"
-              className="w-full py-2.5 px-5 me-2 text-sm font-medium text-gray-900 bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:outline-none focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 inline-flex items-center"
+              className="w-full flex justify-center items-center py-2.5 px-5 me-2 text-sm font-medium text-gray-900 bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:outline-none focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
             >
               <svg
                 aria-hidden="true"
