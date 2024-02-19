@@ -12,6 +12,7 @@ async function bootstrap() {
     new FastifyAdapter({
       logger: true,
     }),
+    { cors: true },
   );
   await app.listen(3000);
   app.useGlobalPipes(new ValidationPipe());

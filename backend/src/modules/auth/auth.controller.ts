@@ -1,8 +1,19 @@
-import { Body, Controller, HttpStatus, Post, Res } from '@nestjs/common';
-import { FastifyReply } from 'fastify';
+import {
+  Body,
+  Controller,
+  Get,
+  HttpStatus,
+  Post,
+  Request,
+  Res,
+  UnauthorizedException,
+  UseGuards,
+} from '@nestjs/common';
+import { FastifyReply, FastifyRequest } from 'fastify';
 import { CreateUserDto } from 'src/dto/user/create-user.dto';
 import { SignInUserDto } from 'src/dto/user/signin-user.dto';
 import { AuthService } from './auth.service';
+import { AuthGuard } from './auth.guard';
 
 @Controller('auth')
 export class AuthController {
@@ -30,12 +41,25 @@ export class AuthController {
     @Res() res: FastifyReply,
   ): Promise<FastifyReply> {
     try {
+      const access_token = await this.authService.signin(user);
 
-      return res.code(HttpStatus.OK).send({ message: 'signin' });
+      return res.code(HttpStatus.OK).send(access_token);
     } catch (error) {
+      if (error instanceof UnauthorizedException) {
+        return res
+          .code(HttpStatus.UNAUTHORIZED)
+          .send({ message: error.message });
+      }
+
       return res
         .code(HttpStatus.INTERNAL_SERVER_ERROR)
-        .send({ message: error.message });
+        .send({ message: 'Server error' });
     }
+  }
+
+  @UseGuards(AuthGuard)
+  @Get('profile')
+  async getProfile(@Request() req) {
+    return req.user;
   }
 }
