@@ -1,4 +1,8 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import {
+  Injectable,
+  InternalServerErrorException,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { CreateUserDto } from 'src/dto/user/create-user.dto';
 import { SignInUserDto } from 'src/dto/user/signin-user.dto';
 import { UsersService } from 'src/modules/users/users.service';
@@ -20,23 +24,31 @@ export class AuthService {
   }
 
   async signin(signinUser: SignInUserDto): Promise<{ access_token: string }> {
-    const foundUser: User = await this.usersService.findOneSingingIn(
-      signinUser.email,
-    );
+    try {
+      const foundUser: User = await this.usersService.findOneSingingIn(
+        signinUser.email,
+      );
 
-    if (!foundUser) throw new UnauthorizedException();
+      if (!foundUser) throw new UnauthorizedException('Invalid credentials');
 
-    const isMatch = await bcrypt.compare(
-      signinUser.password,
-      foundUser.password,
-    );
+      const isMatch = await bcrypt.compare(
+        signinUser.password,
+        foundUser.password,
+      );
 
-    if (!isMatch) throw new UnauthorizedException();
+      if (!isMatch) throw new UnauthorizedException('Invalid credentials');
 
-    const payload = { sub: foundUser._id, username: foundUser.username };
+      const payload = { sub: foundUser._id, username: foundUser.username };
 
-    return {
-      access_token: await this.jwtService.signAsync(payload),
-    };
+      return {
+        access_token: await this.jwtService.signAsync(payload),
+      };
+    } catch (error) {
+      // Invalid credentials
+      if (error instanceof UnauthorizedException) throw error;
+      
+      // Server error
+      throw new InternalServerErrorException();
+    }
   }
 }

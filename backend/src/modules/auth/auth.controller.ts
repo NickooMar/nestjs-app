@@ -6,6 +6,7 @@ import {
   Post,
   Request,
   Res,
+  UnauthorizedException,
   UseGuards,
 } from '@nestjs/common';
 import { FastifyReply, FastifyRequest } from 'fastify';
@@ -44,9 +45,15 @@ export class AuthController {
 
       return res.code(HttpStatus.OK).send(access_token);
     } catch (error) {
+      if (error instanceof UnauthorizedException) {
+        return res
+          .code(HttpStatus.UNAUTHORIZED)
+          .send({ message: error.message });
+      }
+
       return res
         .code(HttpStatus.INTERNAL_SERVER_ERROR)
-        .send({ message: error.message });
+        .send({ message: 'Server error' });
     }
   }
 

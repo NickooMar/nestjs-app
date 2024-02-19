@@ -15,15 +15,12 @@ class AuthService {
   }
 
   public async login({ email, password }: Signin) {
-    try {
-      const { data } = await this.axiosInstance.post("/auth/signin", {
-        email,
-        password,
-      });
-      return data;
-    } catch (error) {
-      throw error;
-    }
+    const { data } = await this.axiosInstance.post("/auth/signin", {
+      email,
+      password,
+    });
+
+    return data;
   }
 
   public async logout() {
