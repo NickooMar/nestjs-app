@@ -1,9 +1,11 @@
 import { useState } from "react";
-import { useForm, SubmitHandler } from "react-hook-form";
 import { Link } from "react-router-dom";
+/* Hooks */
+import { useForm, SubmitHandler } from "react-hook-form";
+import useAuth from "../../Hooks/useAuth";
+/* Icons */
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
-import useAuth from "../../Hooks/useAuth";
 
 type Inputs = {
   email: string;
@@ -11,7 +13,7 @@ type Inputs = {
 };
 
 const Signin = () => {
-  const { handleSigning } = useAuth();
+  const { handleSignin } = useAuth();
 
   const {
     register,
@@ -25,7 +27,7 @@ const Signin = () => {
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     setIsLoading(true);
-    await handleSigning(data);
+    await handleSignin(data);
     setIsLoading(false);
   };
 

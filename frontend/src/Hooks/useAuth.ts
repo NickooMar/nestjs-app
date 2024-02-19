@@ -4,20 +4,38 @@ import { Signup, Signin } from "Types/auth.types";
 import { toast } from "sonner";
 
 const useAuth = () => {
-  const handleSignup = ({ email, password, passwordConfirm }: Signup) => {
-    console.log({ email, password, passwordConfirm });
+  const handleSignup = async ({ email, password, passwordConfirm }: Signup) => {
+    try {
+      if (password !== passwordConfirm)
+        return toast.error("Passwords do not match");
+
+      await authService.register({ email, password, passwordConfirm });
+
+      return toast.success("Account created successfully");
+    } catch (error) {
+      const axiosError = error as AxiosError;
+      const FOUND = 302;
+
+      // Invalid credentials
+      if (axiosError.response && axiosError.response.status === FOUND) {
+        return toast.error("User already exists");
+      }
+
+      return toast.error("Internal server error");
+    }
   };
 
-  const handleSigning = async ({ email, password }: Signin) => {
+  const handleSignin = async ({ email, password }: Signin) => {
     try {
-      const { access_token } = await authService.login({ email, password });
+      const { access_token } = await authService.signin({ email, password });
 
       return access_token;
     } catch (error) {
       const axiosError = error as AxiosError;
+      const UNAUTHORIZED = 401;
 
       // Invalid credentials
-      if (axiosError.response && axiosError.response.status === 401) {
+      if (axiosError.response && axiosError.response.status === UNAUTHORIZED) {
         return toast.error("Invalid credentials");
       }
 
@@ -25,7 +43,7 @@ const useAuth = () => {
     }
   };
 
-  return { handleSigning, handleSignup };
+  return { handleSignin, handleSignup };
 };
 
 export default useAuth;

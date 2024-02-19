@@ -14,7 +14,7 @@ class AuthService {
     });
   }
 
-  public async login({ email, password }: Signin) {
+  public async signin({ email, password }: Signin) {
     const { data } = await this.axiosInstance.post("/auth/signin", {
       email,
       password,
@@ -27,8 +27,8 @@ class AuthService {
     // logout logic
   }
 
-  public async register(username: string, password: string) {
-    // register logic
+  public async register({ email, password, passwordConfirm }: Signup) {
+    console.log({ email, password, passwordConfirm });
   }
 }
 

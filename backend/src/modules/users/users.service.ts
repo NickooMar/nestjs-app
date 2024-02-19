@@ -41,9 +41,10 @@ export class UsersService {
   async create(createUser: CreateUserDto): Promise<User | undefined> {
     const { email, username, password, passwordConfirm } = createUser;
 
-    const foundUser = await this.findOneByIdentifier(email);
+    const foundUserByEmail = await this.findOneByIdentifier(email);
+    const foundUserByUsername = await this.findOneByIdentifier(username);
 
-    if (foundUser)
+    if (foundUserByEmail || foundUserByUsername)
       throw new HttpException('user_already_exists', HttpStatus.FOUND);
 
     if (password !== passwordConfirm)
