@@ -30,8 +30,9 @@ const Signin = () => {
   };
 
   return (
-    <div className="flex items-center justify-center h-screen bg-rose-500 dark:bg-[#111827]">
-      <div className="w-full max-w-xl p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-6 md:p-8 dark:bg-gray-800 dark:border-gray-700">
+    <div className="flex items-center justify-center h-screen bg-rose-500 dark:bg-[#111827] dark:bg-dot-white/[0.2] bg-dot-black/[0.2]">
+      <div className="absolute pointer-events-none inset-0 flex items-center justify-center  bg-slate-900 [mask-image:radial-gradient(ellipse_at_center,transparent_50%,black)] opacity-45"></div>
+      <div className="w-full max-w-xl p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-6 md:p-8 dark:bg-gray-800 dark:border-gray-700 ">
         <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
           <img
             src="https://static-00.iconduck.com/assets.00/nestjs-icon-2048x2040-3rrvcej8.png"
