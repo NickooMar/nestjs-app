@@ -6,6 +6,7 @@ import useAuth from "../../Hooks/useAuth";
 /* Icons */
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 /* Components */
 import { BackgroundBeams } from "../../Components/BackgroundBeams/BackgroundBeams";
 
@@ -40,10 +41,13 @@ const Signup = () => {
   };
 
   return (
-    <div className="h-screen bg-rose-900 dark:bg-black flex flex-col items-center justify-center antialiased z-0">
+    <div className="h-screen bg-rose-900 dark:bg-gray-900 flex flex-col items-center justify-center antialiased z-0">
       <BackgroundBeams />
       {/* <div className="absolute pointer-events-none inset-0 flex items-center justify-center  dark:bg-black bg-slate-700 [mask-image:radial-gradient(ellipse_at_center,transparent_50%,black)] opacity-45"></div> */}
-      <div className="w-full max-w-xl p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-6 md:p-8 dark:bg-gray-800 dark:border-gray-700 z-10">
+      <div className="w-full max-w-xl p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-6 md:p-8 dark:bg-gray-800 dark:border-gray-700 z-10 relative">
+        <Link to="/auth/signin">
+          <ArrowBackIcon className="absolute dark:text-white text-rose-600" />
+        </Link>
         <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
           <img
             src="https://static-00.iconduck.com/assets.00/nestjs-icon-2048x2040-3rrvcej8.png"
