@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 /* Hooks */
 import { useForm, SubmitHandler } from "react-hook-form";
@@ -19,7 +19,8 @@ const Signin = () => {
     register,
     handleSubmit,
     trigger,
-    formState: { errors },
+    reset,
+    formState: { errors, isSubmitSuccessful },
   } = useForm<Inputs>();
 
   const [showPassword, setShowPassword] = useState(false);
@@ -30,6 +31,10 @@ const Signin = () => {
     await handleSignin(data);
     setIsLoading(false);
   };
+
+  useEffect(() => {
+    if (isSubmitSuccessful) reset();
+  }, [isSubmitSuccessful]);
 
   return (
     <div className="flex items-center justify-center h-screen bg-rose-900 dark:bg-[#111827] dark:bg-dot-white/[0.2] bg-dot-black/[0.2]">

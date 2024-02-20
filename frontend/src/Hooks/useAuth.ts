@@ -4,12 +4,22 @@ import { Signup, Signin } from "Types/auth.types";
 import { toast } from "sonner";
 
 const useAuth = () => {
-  const handleSignup = async ({ email, password, passwordConfirm }: Signup) => {
+  const handleSignup = async ({
+    email,
+    username,
+    password,
+    passwordConfirm,
+  }: Signup) => {
     try {
       if (password !== passwordConfirm)
         return toast.error("Passwords do not match");
 
-      await authService.register({ email, password, passwordConfirm });
+      await authService.register({
+        email,
+        username,
+        password,
+        passwordConfirm,
+      });
 
       return toast.success("Account created successfully");
     } catch (error) {

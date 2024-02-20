@@ -29,6 +29,12 @@ export class AuthController {
 
       return res.code(HttpStatus.OK).send({ createdUser });
     } catch (error) {
+      if (error.status === HttpStatus.FOUND) {
+        return res
+          .code(HttpStatus.FOUND)
+          .send({ message: 'User already exists' });
+      }
+
       return res
         .code(HttpStatus.INTERNAL_SERVER_ERROR)
         .send({ message: error.message });

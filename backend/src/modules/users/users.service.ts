@@ -47,11 +47,12 @@ export class UsersService {
     if (foundUserByEmail || foundUserByUsername)
       throw new HttpException('user_already_exists', HttpStatus.FOUND);
 
-    if (password !== passwordConfirm)
+    if (password !== passwordConfirm) {
       throw new HttpException(
         'passwords_not_match',
         HttpStatus.EXPECTATION_FAILED,
       );
+    }
 
     const hashedPassword = await bcrypt.hash(password, 10);
 

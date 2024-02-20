@@ -4,7 +4,7 @@ import { Toaster } from "sonner";
 const App = () => {
   return (
     <>
-      <Toaster richColors position="top-right" duration={3500} closeButton />
+      <Toaster richColors position="top-right" duration={3500} />
       <Routes />
     </>
   );

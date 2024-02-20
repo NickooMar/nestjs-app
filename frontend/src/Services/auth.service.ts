@@ -27,8 +27,20 @@ class AuthService {
     // logout logic
   }
 
-  public async register({ email, password, passwordConfirm }: Signup) {
-    console.log({ email, password, passwordConfirm });
+  public async register({
+    email,
+    username,
+    password,
+    passwordConfirm,
+  }: Signup) {
+    const { data } = await this.axiosInstance.post("/auth/signup", {
+      email,
+      username,
+      password,
+      passwordConfirm,
+    });
+
+    return data;
   }
 }
 
