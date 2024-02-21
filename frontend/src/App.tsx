@@ -1,4 +1,4 @@
-import Routes from "./Routes/root";
+import Routes from "@routes/root";
 import { Toaster } from "sonner";
 
 const App = () => {

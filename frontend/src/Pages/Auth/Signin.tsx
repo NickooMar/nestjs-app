@@ -2,7 +2,9 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 /* Hooks */
 import { useForm, SubmitHandler } from "react-hook-form";
-import useAuth from "../../Hooks/useAuth";
+import useAuth from "@hooks/useAuth";
+/* Store */
+import { useAuthStore } from "@store/auth.store";
 /* Icons */
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
@@ -14,6 +16,7 @@ type Inputs = {
 
 const Signin = () => {
   const { handleSignin } = useAuth();
+  const { setToken } = useAuthStore((state) => state);
 
   const {
     register,
@@ -28,7 +31,10 @@ const Signin = () => {
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     setIsLoading(true);
-    await handleSignin(data);
+    const token = await handleSignin(data);
+
+    if (token) setToken(token);
+
     setIsLoading(false);
   };
 

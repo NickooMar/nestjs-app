@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { cn } from "../../Utils/cn";
+import { cn } from "@utils/cn";
 
 export function BackgroundBeamsDemo() {
   return (

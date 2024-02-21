@@ -1,6 +1,6 @@
 import { AxiosError } from "axios";
-import { authService } from "../Services/auth.service";
-import { Signup, Signin } from "Types/auth.types";
+import { authService } from "@services/auth.service";
+import { Signup, Signin } from "../types/auth.types";
 import { toast } from "sonner";
 
 const useAuth = () => {

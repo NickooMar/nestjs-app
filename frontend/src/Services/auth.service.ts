@@ -1,4 +1,4 @@
-import { Signup, Signin } from "Types/auth.types";
+import { Signup, Signin } from "types/auth.types";
 import axios, { AxiosInstance } from "axios";
 
 class AuthService {
