@@ -2,8 +2,11 @@ import { AxiosError } from "axios";
 import { authService } from "@services/auth.service";
 import { Signup, Signin } from "../types/auth.types";
 import { toast } from "sonner";
+import { useNavigate } from 'react-router-dom';
 
 const useAuth = () => {
+  const navigate = useNavigate()
+
   const handleSignup = async ({
     email,
     username,
@@ -20,6 +23,8 @@ const useAuth = () => {
         password,
         passwordConfirm,
       });
+
+      navigate('/auth/signin')
 
       return toast.success("Account created successfully");
     } catch (error) {

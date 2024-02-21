@@ -46,7 +46,7 @@ export class AuthService {
     } catch (error) {
       // Invalid credentials
       if (error instanceof UnauthorizedException) throw error;
-      
+
       // Server error
       throw new InternalServerErrorException();
     }
