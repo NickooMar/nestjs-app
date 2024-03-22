@@ -2,10 +2,12 @@ import { AxiosError } from "axios";
 import { authService } from "@services/auth.service";
 import { Signup, Signin } from "../types/auth.types";
 import { toast } from "sonner";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 const useAuth = () => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const handleSignup = async ({
     email,
@@ -24,7 +26,7 @@ const useAuth = () => {
         passwordConfirm,
       });
 
-      navigate('/auth/signin')
+      navigate("/auth/signin");
 
       return toast.success("Account created successfully");
     } catch (error) {
@@ -51,10 +53,10 @@ const useAuth = () => {
 
       // Invalid credentials
       if (axiosError.response && axiosError.response.status === UNAUTHORIZED) {
-        return toast.error("Invalid credentials");
+        return toast.error(t("signin.messages.errors.unathorized"));
       }
 
-      return toast.error("Internal server error");
+      return toast.error(t("signin.messages.errors.internal_server_error"));
     }
   };
 

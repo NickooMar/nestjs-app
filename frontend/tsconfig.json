@@ -31,7 +31,9 @@
       "@services/*": ["services/*"],
       "@store/*": ["store/*"],
       "@types/*": ["types/*"],
-      "@utils/*": ["utils/*"]
+      "@utils/*": ["utils/*"],
+      "@config/*": ["config/*"],
+      "@locales/*": ["locales/*"]
     }
   },
   "include": ["src"],
