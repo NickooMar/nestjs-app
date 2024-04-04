@@ -3,7 +3,6 @@ import { UsersController } from './users.controller';
 import { UsersService } from './users.service';
 import { HttpStatus } from '@nestjs/common';
 import { Response } from 'express';
-import { User } from 'src/types/user.type';
 
 describe('Users Controller', () => {
   let usersController: UsersController;

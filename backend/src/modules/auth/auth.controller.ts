@@ -9,7 +9,7 @@ import {
   UnauthorizedException,
   UseGuards,
 } from '@nestjs/common';
-import { FastifyReply, FastifyRequest } from 'fastify';
+import { FastifyReply } from 'fastify';
 import { CreateUserDto } from 'src/dto/user/create-user.dto';
 import { SignInUserDto } from 'src/dto/user/signin-user.dto';
 import { AuthService } from './auth.service';

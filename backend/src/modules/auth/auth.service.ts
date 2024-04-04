@@ -9,6 +9,7 @@ import { UsersService } from 'src/modules/users/users.service';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
 import { User } from 'src/schemas/user.schema';
+import { User as UserType } from 'src/types/user.type';
 
 @Injectable()
 export class AuthService {
@@ -48,6 +49,16 @@ export class AuthService {
       if (error instanceof UnauthorizedException) throw error;
 
       // Server error
+      throw new InternalServerErrorException();
+    }
+  }
+
+  async profile(access_token: string): Promise<UserType> {
+    try {
+      console.log({ access_token });
+
+      return { _id: '1', email: '', username: '' };
+    } catch (error) {
       throw new InternalServerErrorException();
     }
   }

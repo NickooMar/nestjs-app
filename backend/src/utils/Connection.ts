@@ -1,6 +1,9 @@
 import { ClientSession, Connection } from 'mongoose';
 
-export const transaction = async <T>(connection: Connection, cb: (session: ClientSession) => Promise<T>): Promise<T> => {
+export const transaction = async <T>(
+  connection: Connection,
+  cb: (session: ClientSession) => Promise<T>,
+): Promise<T> => {
   const session = await connection.startSession();
 
   try {
@@ -14,4 +17,4 @@ export const transaction = async <T>(connection: Connection, cb: (session: Clien
   } finally {
     await session.endSession();
   }
-}
+};

@@ -1,14 +1,16 @@
-import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 /* Hooks */
-import { SubmitHandler, useForm } from "react-hook-form";
-import useAuth from "@hooks/useAuth";
+import { SubmitHandler, useForm } from 'react-hook-form';
+import useAuth from '@hooks/useAuth';
 /* Icons */
-import VisibilityIcon from "@mui/icons-material/Visibility";
-import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
-import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 /* Components */
-import { BackgroundBeams } from "@components/BackgroundBeams/BackgroundBeams";
+import { BackgroundBeams } from '@components/BackgroundBeams/BackgroundBeams';
+/* Translation */
+import { useTranslation } from 'react-i18next';
 
 type Inputs = {
   email: string;
@@ -19,6 +21,8 @@ type Inputs = {
 
 const Signup = () => {
   const { handleSignup } = useAuth();
+
+  const { t } = useTranslation();
 
   const {
     register,
@@ -31,11 +35,11 @@ const Signup = () => {
 
   const [showPassword, setShowPassword] = useState(false);
   const [showPasswordConfirm, setShowPasswordConfirm] = useState(false);
-  const password = watch("password");
-  const passwordConfirm = watch("passwordConfirm");
+  const password = watch('password');
+  const passwordConfirm = watch('passwordConfirm');
   const [isLoading, setIsLoading] = useState(false);
 
-  const onSubmit: SubmitHandler<Inputs> = async (data) => {
+  const onSubmit: SubmitHandler<Inputs> = async data => {
     setIsLoading(true);
     await handleSignup(data);
     setIsLoading(false);
@@ -43,12 +47,11 @@ const Signup = () => {
 
   useEffect(() => {
     if (isSubmitSuccessful) reset();
-  }, [isSubmitSuccessful]);
+  }, [isSubmitSuccessful, reset]);
 
   return (
     <div className="h-screen bg-rose-900 dark:bg-gray-900 flex flex-col items-center justify-center antialiased z-0">
       <BackgroundBeams />
-      {/* <div className="absolute pointer-events-none inset-0 flex items-center justify-center  dark:bg-black bg-slate-700 [mask-image:radial-gradient(ellipse_at_center,transparent_50%,black)] opacity-45"></div> */}
       <div className="w-full max-w-xl p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-6 md:p-8 dark:bg-gray-800 dark:border-gray-700 z-10 relative">
         <Link to="/auth/signin">
           <ArrowBackIcon className="absolute dark:text-white text-rose-600" />
@@ -60,32 +63,32 @@ const Signup = () => {
             className="mx-auto h-40 w-auto"
           />
           <h5 className="text-xl text-center font-medium text-gray-900 dark:text-white">
-            Sign up
+            {t('signup.title')}
           </h5>
           <div>
             <label
               htmlFor="email"
               className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
             >
-              Your email
+              {t('signup.email.title')}
             </label>
             <input
-              {...register("email", {
-                required: "Email is required",
+              {...register('email', {
+                required: t('signup.email.required'),
                 pattern: {
                   value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                  message: "Invalid email address",
+                  message: t('signup.email.invalid'),
                 },
               })}
               id="email"
               type="email"
               name="email"
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-              placeholder="name@company.com"
+              placeholder={t('signup.email.placeholder')}
               required={true}
               onError={errors.email ? () => {} : undefined}
               onKeyUp={() => {
-                trigger("email");
+                trigger('email');
               }}
             />
             {errors.email && (
@@ -97,34 +100,34 @@ const Signup = () => {
               htmlFor="username"
               className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
             >
-              Your username
+              {t('signup.username.title')}
             </label>
             <input
-              {...register("username", {
-                required: "Username is required",
+              {...register('username', {
+                required: t('signup.username.required'),
                 minLength: {
                   value: 4,
-                  message: "Username should be at least 4 characters",
+                  message: t('signup.username.min_length'),
                 },
                 maxLength: {
                   value: 20,
-                  message: "Username should not exceed 20 characters",
+                  message: t('signup.username.max_length'),
                 },
                 pattern: {
                   value:
                     /^[a-zA-Z0-9](_(?!(\.|_))|\.(?!(_|\.))|[a-zA-Z0-9]){6,18}[a-zA-Z0-9]$/,
-                  message: "Invalid username",
+                  message: t('signup.username.invalid'),
                 },
               })}
               id="username"
               type="username"
               name="username"
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-              placeholder="Enter your username"
+              placeholder={t('signup.username.placeholder')}
               required={true}
               onError={errors.username ? () => {} : undefined}
               onKeyUp={() => {
-                trigger("username");
+                trigger('username');
               }}
             />
             {errors.username && (
@@ -136,27 +139,26 @@ const Signup = () => {
               htmlFor="password"
               className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
             >
-              Your password
+              {t('signup.password.title')}
             </label>
             <input
-              {...register("password", {
-                required: "You must specify a password",
+              {...register('password', {
+                required: t('signup.password.required'),
                 minLength: {
                   value: 8,
-                  message: "Password must have at least 8 characters",
+                  message: t('signup.password.min_length'),
                 },
                 maxLength: {
                   value: 20,
-                  message: "Password should not exceed 20 characters",
+                  message: t('signup.password.max_length'),
                 },
                 pattern: {
                   value:
                     /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,20}$/,
-                  message:
-                    "Password must contain at least one uppercase letter, one lowercase letter, one number and one special character",
+                  message: t('signup.password.pattern'),
                 },
               })}
-              type={showPassword ? "text" : "password"}
+              type={showPassword ? 'text' : 'password'}
               name="password"
               id="password"
               placeholder="••••••••"
@@ -165,7 +167,7 @@ const Signup = () => {
               required={true}
               onError={errors.password ? () => {} : undefined}
               onKeyUp={() => {
-                trigger("password");
+                trigger('password');
               }}
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
             />
@@ -190,15 +192,16 @@ const Signup = () => {
               htmlFor="passwordConfirm"
               className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
             >
-              Confirm your password
+              {t('signup.confirm_password.title')}
             </label>
             <input
-              {...register("passwordConfirm", {
-                required: "You must specify a password",
-                validate: (passwordConfirm) =>
-                  passwordConfirm === password || "The passwords do not match",
+              {...register('passwordConfirm', {
+                required: t('signup.confirm_password.required'),
+                validate: passwordConfirm =>
+                  passwordConfirm === password ||
+                  t('signup.confirm_password.not_match'),
               })}
-              type={showPasswordConfirm ? "text" : "password"}
+              type={showPasswordConfirm ? 'text' : 'password'}
               name="passwordConfirm"
               id="passwordConfirm"
               placeholder="••••••••"
@@ -207,7 +210,7 @@ const Signup = () => {
               required={true}
               onError={errors.passwordConfirm ? () => {} : undefined}
               onKeyUp={() => {
-                trigger("passwordConfirm");
+                trigger('passwordConfirm');
               }}
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
             />
@@ -234,7 +237,7 @@ const Signup = () => {
               type="submit"
               className="w-full text-white bg-rose-600 hover:bg-rose-800 focus:ring-4 focus:outline-none focus:ring-rose-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
             >
-              Create account
+              {t('signup.create')}
             </button>
           ) : (
             <button
@@ -259,7 +262,7 @@ const Signup = () => {
                   fill="#1C64F2"
                 />
               </svg>
-              Loading...
+              {t('general.loading')}
             </button>
           )}
         </form>

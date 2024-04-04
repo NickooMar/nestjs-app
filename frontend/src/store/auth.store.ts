@@ -1,5 +1,5 @@
-import { create } from "zustand";
-import { persist } from "zustand/middleware";
+import { create } from 'zustand';
+import { persist } from 'zustand/middleware';
 
 type State = {
   token: string | null;
@@ -11,15 +11,15 @@ type Actions = {
 
 export const useAuthStore = create(
   persist<State & Actions>(
-    (set) => ({
+    set => ({
       token: null,
       setToken: (token: string) =>
-        set((state) => ({
+        set(() => ({
           token,
         })),
     }),
     {
-      name: "auth",
+      name: 'auth',
     }
   )
 );

@@ -1,9 +1,9 @@
-import { AxiosError } from "axios";
-import { authService } from "@services/auth.service";
-import { Signup, Signin } from "../types/auth.types";
-import { toast } from "sonner";
-import { useNavigate } from "react-router-dom";
-import { useTranslation } from "react-i18next";
+import { AxiosError } from 'axios';
+import { authService } from '@services/auth.service';
+import { Signup, Signin } from '../types/auth.types';
+import { toast } from 'sonner';
+import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 const useAuth = () => {
   const navigate = useNavigate();
@@ -17,7 +17,7 @@ const useAuth = () => {
   }: Signup) => {
     try {
       if (password !== passwordConfirm)
-        return toast.error("Passwords do not match");
+        return toast.error(t('signup.messages.erros.passwords_do_not_match'));
 
       await authService.register({
         email,
@@ -26,19 +26,19 @@ const useAuth = () => {
         passwordConfirm,
       });
 
-      navigate("/auth/signin");
+      navigate('/auth/signin');
 
-      return toast.success("Account created successfully");
+      return toast.success(t('signup.messages.success.account_created'));
     } catch (error) {
       const axiosError = error as AxiosError;
       const FOUND = 302;
 
       // Invalid credentials
       if (axiosError.response && axiosError.response.status === FOUND) {
-        return toast.error("User already exists");
+        return toast.error(t('signup.messages.erros.user_already_exists'));
       }
 
-      return toast.error("Internal server error");
+      return toast.error(t('signup.messages.erros.internal_server_error'));
     }
   };
 
@@ -53,10 +53,10 @@ const useAuth = () => {
 
       // Invalid credentials
       if (axiosError.response && axiosError.response.status === UNAUTHORIZED) {
-        return toast.error(t("signin.messages.errors.unathorized"));
+        return toast.error(t('signin.messages.errors.unathorized'));
       }
 
-      return toast.error(t("signin.messages.errors.internal_server_error"));
+      return toast.error(t('signin.messages.errors.internal_server_error'));
     }
   };
 

@@ -9,7 +9,7 @@ import { Task, TaskSchema } from '../../schemas/task.schema';
     MongooseModule.forFeature([
       {
         name: Task.name,
-        schema: TaskSchema, 
+        schema: TaskSchema,
       },
     ]),
   ],
