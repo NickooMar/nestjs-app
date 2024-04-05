@@ -1,6 +1,6 @@
-import Routes from "@routes/root";
-import { Toaster } from "sonner";
-import "@config/i18n";
+import Routes from '@/routes/root';
+import { Toaster } from 'sonner';
+import '@/config/i18n';
 
 const App = () => {
   return (

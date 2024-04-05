@@ -24,17 +24,20 @@
     /* Imports Paths */
     "baseUrl": "./src",
     "paths": {
-      "@components/*": ["components/*"],
-      "@hooks/*": ["hooks/*"],
-      "@pages/*": ["pages/*"],
-      "@routes/*": ["routes/*"],
-      "@services/*": ["services/*"],
-      "@store/*": ["store/*"],
-      "@types/*": ["types/*"],
-      "@utils/*": ["utils/*"],
-      "@config/*": ["config/*"],
-      "@locales/*": ["locales/*"]
+      "@/*": ["*"]
     }
+    // "paths": {
+    //   "@components/*": ["components/*"],
+    //   "@hooks/*": ["hooks/*"],
+    //   "@pages/*": ["pages/*"],
+    //   "@routes/*": ["routes/*"],
+    //   "@services/*": ["services/*"],
+    //   "@store/*": ["store/*"],
+    //   "@types/*": ["types/*"],
+    //   "@utils/*": ["utils/*"],
+    //   "@config/*": ["config/*"],
+    //   "@locales/*": ["locales/*"]
+    // }
   },
   "include": ["src"],
   "references": [{ "path": "./tsconfig.node.json" }]

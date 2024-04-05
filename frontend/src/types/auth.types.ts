@@ -9,3 +9,10 @@ export interface Signin {
   email: string;
   password: string;
 }
+
+export interface Profile {
+  exp: number;
+  iat: number;
+  sub: string;
+  username: string;
+}

@@ -2,13 +2,13 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 /* Hooks */
 import { SubmitHandler, useForm } from 'react-hook-form';
-import useAuth from '@hooks/useAuth';
+import useAuth from '@/hooks/useAuth';
 /* Icons */
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 /* Components */
-import { BackgroundBeams } from '@components/BackgroundBeams/BackgroundBeams';
+import { BackgroundBeams } from '@/components/BackgroundBeams/BackgroundBeams';
 /* Translation */
 import { useTranslation } from 'react-i18next';
 

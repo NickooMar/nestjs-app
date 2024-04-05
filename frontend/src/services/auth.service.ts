@@ -1,5 +1,6 @@
-import { Signup, Signin } from "types/auth.types";
-import axios, { AxiosInstance } from "axios";
+import { Signup, Signin } from '@/types/auth.types';
+import axios, { AxiosInstance } from 'axios';
+import { authApi } from '@/utils/axios';
 
 class AuthService {
   private readonly axiosInstance: AxiosInstance;
@@ -8,14 +9,14 @@ class AuthService {
     this.axiosInstance = axios.create({
       baseURL,
       headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
       },
     });
   }
 
   public async signin({ email, password }: Signin) {
-    const { data } = await this.axiosInstance.post("/auth/signin", {
+    const { data } = await this.axiosInstance.post('/auth/signin', {
       email,
       password,
     });
@@ -33,12 +34,18 @@ class AuthService {
     password,
     passwordConfirm,
   }: Signup) {
-    const { data } = await this.axiosInstance.post("/auth/signup", {
+    const { data } = await this.axiosInstance.post('/auth/signup', {
       email,
       username,
       password,
       passwordConfirm,
     });
+
+    return data;
+  }
+
+  public async profile() {
+    const { data } = await authApi.get('/auth/profile');
 
     return data;
   }

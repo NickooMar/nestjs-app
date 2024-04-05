@@ -1,15 +1,15 @@
-import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 /* Hooks */
-import { useForm, SubmitHandler } from "react-hook-form";
-import useAuth from "@hooks/useAuth";
+import { useForm, SubmitHandler } from 'react-hook-form';
+import useAuth from '@/hooks/useAuth';
 /* Store */
-import { useAuthStore } from "@store/auth.store";
+import { useAuthStore } from '@/store/auth.store';
 /* Icons */
-import VisibilityIcon from "@mui/icons-material/Visibility";
-import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 /* Translation */
-import { useTranslation } from "react-i18next";
+import { useTranslation } from 'react-i18next';
 
 type Inputs = {
   email: string;
@@ -17,8 +17,8 @@ type Inputs = {
 };
 
 const Signin = () => {
-  const { handleSignin } = useAuth();
-  const { setToken } = useAuthStore((state) => state);
+  const { handleSignin, profileRequest } = useAuth();
+  const { setToken } = useAuthStore(state => state);
   const { t } = useTranslation();
 
   const {
@@ -32,11 +32,13 @@ const Signin = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
-  const onSubmit: SubmitHandler<Inputs> = async (data) => {
+  const onSubmit: SubmitHandler<Inputs> = async data => {
     setIsLoading(true);
     const token = await handleSignin(data);
 
     if (token) setToken(token);
+
+    await profileRequest();
 
     setIsLoading(false);
   };
@@ -56,32 +58,32 @@ const Signin = () => {
             className="mx-auto h-40 w-auto"
           />
           <h5 className="text-xl text-center font-medium text-gray-900 dark:text-white">
-            {t("signin.title")}
+            {t('signin.title')}
           </h5>
           <div>
             <label
               htmlFor="email"
               className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
             >
-              {t("signin.email.title")}
+              {t('signin.email.title')}
             </label>
             <input
-              {...register("email", {
-                required: t("signin.email.required"),
+              {...register('email', {
+                required: t('signin.email.required'),
                 pattern: {
                   value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                  message: t("signin.email.invalid"),
+                  message: t('signin.email.invalid'),
                 },
               })}
               id="email"
               type="email"
               name="email"
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-              placeholder={t("signin.email.placeholder")}
+              placeholder={t('signin.email.placeholder')}
               required={true}
               onError={errors.email ? () => {} : undefined}
               onKeyUp={() => {
-                trigger("email");
+                trigger('email');
               }}
             />
             {errors.email && (
@@ -93,13 +95,13 @@ const Signin = () => {
               htmlFor="password"
               className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
             >
-              {t("signin.password.title")}
+              {t('signin.password.title')}
             </label>
             <input
-              {...register("password", {
-                required: t("signin.password.required"),
+              {...register('password', {
+                required: t('signin.password.required'),
               })}
-              type={showPassword ? "text" : "password"}
+              type={showPassword ? 'text' : 'password'}
               name="password"
               id="password"
               placeholder="••••••••"
@@ -124,7 +126,7 @@ const Signin = () => {
               href="#"
               className="ms-auto text-sm text-rose-600 hover:underline dark:text-blue-500"
             >
-              {t("signin.forgot_password")}
+              {t('signin.forgot_password')}
             </a>
           </div>
           {!isLoading ? (
@@ -132,7 +134,7 @@ const Signin = () => {
               type="submit"
               className="w-full text-white bg-rose-600 hover:bg-rose-800 focus:ring-4 focus:outline-none focus:ring-rose-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
             >
-              {t("signin.title")}
+              {t('signin.title')}
             </button>
           ) : (
             <button
@@ -157,16 +159,16 @@ const Signin = () => {
                   fill="#1C64F2"
                 />
               </svg>
-              {t("general.loading")}
+              {t('general.loading')}
             </button>
           )}
           <div className="text-sm font-medium text-gray-500 dark:text-gray-300">
-            {t("signin.not_registered")}
+            {t('signin.not_registered')}
             <Link
               to="/auth/signup"
               className="ml-1 text-rose-600 hover:underline dark:text-blue-500"
             >
-              {t("signin.create_account")}
+              {t('signin.create_account')}
             </Link>
           </div>
         </form>
