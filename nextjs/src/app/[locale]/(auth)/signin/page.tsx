@@ -72,7 +72,7 @@ const SigninPage = () => {
                 <FormItem>
                   <FormLabel>Email</FormLabel>
                   <FormControl>
-                    <Input placeholder="name@example.com" {...field} />
+                    <Input placeholder="Email address" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>

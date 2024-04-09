@@ -1,10 +1,5 @@
-import { ModeToggle } from "@/app/components/ModeToggle"
+import { redirect } from "next/navigation"
 
-export default function Page() {
-  return (
-    <div>
-      <ModeToggle />
-      <h1>Hello, Next.js!</h1>
-    </div>
-  )
+export default function RootPage() {
+  redirect("/en")
 }
