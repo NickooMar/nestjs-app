@@ -20,11 +20,13 @@ import {
 import { Input } from "@/components/ui/input"
 import { Separator } from "@/components/ui/separator"
 import GoogleIcon from "@mui/icons-material/Google"
+import { useTranslations } from "next-intl"
 
 type formData = z.infer<typeof signinFormSchema>
 
 const SigninPage = () => {
   const router = useRouter()
+  const t = useTranslations("signin")
 
   const [showPassword, setShowPassword] = useState<boolean>(false)
 
@@ -47,21 +49,21 @@ const SigninPage = () => {
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
             <h3 className="text-center scroll-m-20 text-2xl font-semibold tracking-tight">
-              Sign in into your account
+              {t("title")}
             </h3>
             <div className="flex flex-col justify-center items-center">
               <p className="text-center text-sm text-muted-foreground">
-                Enter your account information below to access.
+                {t("description")}
               </p>
-              <Button type="button" variant="outline" className="mt-4 w-52">
+              <Button type="button" variant="outline" className=" mt-4 pa-4">
                 <GoogleIcon className="mx-2" />
-                Sign in with Google
+                {t("google_auth")}
               </Button>
             </div>
             <div className="flex justify-center items-center">
               <Separator className="w-[35%]" />
               <p className="text-sm text-muted-foreground mx-4 whitespace-nowrap">
-                Or continue with
+                {t("continue_with")}
               </p>
               <Separator className="w-[35%]" />
             </div>
@@ -70,9 +72,9 @@ const SigninPage = () => {
               name="email"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Email</FormLabel>
+                  <FormLabel>{t("email.title")}</FormLabel>
                   <FormControl>
-                    <Input placeholder="Email address" {...field} />
+                    <Input placeholder={t("email.placeholder")} {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -87,13 +89,12 @@ const SigninPage = () => {
                   <FormControl>
                     <Input type="password" placeholder="*********" {...field} />
                   </FormControl>
-                  <FormDescription></FormDescription>
                   <FormMessage />
                 </FormItem>
               )}
             />
             <Button type="submit" className="bg-gray-950 w-full">
-              Sign in
+              {t("login")}
             </Button>
           </form>
         </Form>

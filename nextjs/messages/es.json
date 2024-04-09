@@ -3,18 +3,22 @@
     "loading": "Cargando..."
   },
   "signin": {
-    "title": "Iniciar sesión",
+    "title": "Iniciar sesión en tu cuenta",
+    "description": "Ingresa la información de tu cuenta a continuación para acceder a la plataforma.",
+    "google_auth": "Iniciar sesión con Google",
+    "continue_with": "o continuar con",
     "email": {
       "title": "Correo electrónico",
       "required": "El correo electrónico es requerido",
       "invalid": "El correo electrónico no es válido",
-      "placeholder": "nombre@empresa.com"
+      "placeholder": "Correo electrónico"
     },
     "password": {
       "title": "Contraseña",
       "required": "La contraseña es requerida"
     },
     "forgot_password": "¿Olvidaste tu contraseña?",
+    "login": "Iniciar sesión",
     "not_registered": "¿No tienes una cuenta?",
     "create_account": "Crear una cuenta",
     "messages": {

@@ -3,12 +3,15 @@
     "loading": "Loading..."
   },
   "signin": {
-    "title": "Sign in",
+    "title": "Sign in into your account",
+    "description": "Enter your account information below to access.",
+    "google_auth": "Sign in with Google",
+    "continue_with": "or continue with",
     "email": {
       "title": "Email",
       "required": "Email is required",
       "invalid": "Email is not valid",
-      "placeholder": "name@company.com"
+      "placeholder": "Email address"
     },
     "password": {
       "title": "Password",
