@@ -11,7 +11,6 @@ import { Button } from "@/components/ui/button"
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -21,6 +20,7 @@ import { Input } from "@/components/ui/input"
 import { Separator } from "@/components/ui/separator"
 import GoogleIcon from "@mui/icons-material/Google"
 import { useTranslations } from "next-intl"
+import { signinProvidersAction } from "@/app/actions"
 
 type formData = z.infer<typeof signinFormSchema>
 
@@ -38,8 +38,10 @@ const SigninPage = () => {
     },
   })
 
-  async function onSubmit(data: formData) {
-    console.log({ data })
+  async function onSubmit(data: formData) {}
+
+  async function handleSigninProviders(provider: string) {
+    await signinProvidersAction(provider)
   }
 
   return (
@@ -55,7 +57,12 @@ const SigninPage = () => {
               <p className="text-center text-sm text-muted-foreground">
                 {t("description")}
               </p>
-              <Button type="button" variant="outline" className=" mt-4 pa-4">
+              <Button
+                type="button"
+                variant="outline"
+                className="mt-4 pa-4"
+                onClick={async () => await handleSigninProviders("google")}
+              >
                 <GoogleIcon className="mx-2" />
                 {t("google_auth")}
               </Button>

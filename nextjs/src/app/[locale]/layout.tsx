@@ -23,7 +23,6 @@ export default function LocaleLayout({
   children,
   params: { locale },
 }: Readonly<LocaleLayoutProps>) {
-  // Receive messages provided in `i18n.ts`
   const messages = useMessages()
 
   return (
@@ -37,7 +36,7 @@ export default function LocaleLayout({
             enableSystem
             disableTransitionOnChange
           >
-            {children}
+            <div>{children}</div>
           </ThemeProvider>
         </NextIntlClientProvider>
       </body>
