@@ -2,6 +2,7 @@ import { NextIntlClientProvider, useMessages } from "next-intl"
 import { Inter } from "next/font/google"
 import type { Metadata } from "next"
 import "./globals.css"
+import SessionWrapper from "@/app/components/SessionWrapper"
 
 import { ThemeProvider } from "@/components/theme-provider"
 
@@ -26,20 +27,22 @@ export default function LocaleLayout({
   const messages = useMessages()
 
   return (
-    <html lang={locale} suppressHydrationWarning={true}>
-      <body className={inter.className}>
-        <NextIntlClientProvider locale={locale} messages={messages}>
-          <nav>nav</nav>
-          <ThemeProvider
-            attribute="class"
-            defaultTheme="system"
-            enableSystem
-            disableTransitionOnChange
-          >
-            <div>{children}</div>
-          </ThemeProvider>
-        </NextIntlClientProvider>
-      </body>
-    </html>
+    <SessionWrapper>
+      <html lang={locale} suppressHydrationWarning={true}>
+        <body className={inter.className}>
+          <NextIntlClientProvider locale={locale} messages={messages}>
+            <nav>nav</nav>
+            <ThemeProvider
+              attribute="class"
+              defaultTheme="system"
+              enableSystem
+              disableTransitionOnChange
+            >
+              <div>{children}</div>
+            </ThemeProvider>
+          </NextIntlClientProvider>
+        </body>
+      </html>
+    </SessionWrapper>
   )
 }

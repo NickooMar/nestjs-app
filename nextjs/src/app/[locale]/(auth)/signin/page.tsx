@@ -21,10 +21,13 @@ import { Separator } from "@/components/ui/separator"
 import GoogleIcon from "@mui/icons-material/Google"
 import { useTranslations } from "next-intl"
 import { signinProvidersAction } from "@/app/actions"
+import { useSession } from "next-auth/react"
+import { PasswordInput } from "@/app/components/Auth/PasswordInput"
 
 type formData = z.infer<typeof signinFormSchema>
 
 const SigninPage = () => {
+  const { data: session } = useSession()
   const router = useRouter()
   const t = useTranslations("signin")
 
@@ -38,7 +41,9 @@ const SigninPage = () => {
     },
   })
 
-  async function onSubmit(data: formData) {}
+  async function onSubmit(data: formData) {
+    console.log({ data })
+  }
 
   async function handleSigninProviders(provider: string) {
     await signinProvidersAction(provider)
@@ -94,15 +99,34 @@ const SigninPage = () => {
                 <FormItem>
                   <FormLabel>Password</FormLabel>
                   <FormControl>
-                    <Input type="password" placeholder="*********" {...field} />
+                    <PasswordInput {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
+            <div className="flex justify-end">
+              <a
+                href="/[locale]/forgot-password"
+                className="text-sm text-rose-600 hover:underline"
+              >
+                {t("forgot_password")}
+              </a>
+            </div>
             <Button type="submit" className="bg-gray-950 w-full">
               {t("login")}
             </Button>
+            <div className="flex justify-center items-center gap-2">
+              <p className="text-sm">{t("not_registered")}</p>
+              <a
+                href="/[locale]/signup"
+                className="text-rose-600 hover:underline"
+              >
+                <span className="text-sm text-rose-600">
+                  {t("create_account")}
+                </span>
+              </a>
+            </div>
           </form>
         </Form>
       </section>
