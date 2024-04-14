@@ -47,12 +47,6 @@ const SigninPage = () => {
     }
   }, [session, router])
 
-  useEffect(() => {
-    if (form.formState.errors) {
-      // TODO: Animates the error message
-    }
-  }, [form.formState.errors])
-
   // Handlers
   async function onSubmit(data: formData) {
     console.log({ data })
