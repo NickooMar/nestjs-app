@@ -1,7 +1,7 @@
 "use client"
 
-import React, { useState } from "react"
-import { useRouter } from "next/navigation"
+import React, { useEffect } from "react"
+import { useRouter } from "@/navigation"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
 import { signinFormSchema } from "@/lib/zodSchemas"
@@ -23,6 +23,7 @@ import { useTranslations } from "next-intl"
 import { signinProvidersAction } from "@/app/actions"
 import { useSession } from "next-auth/react"
 import { PasswordInput } from "@/app/components/Auth/PasswordInput"
+import { Link as NavigationLink } from "@/navigation"
 
 type formData = z.infer<typeof signinFormSchema>
 
@@ -30,8 +31,6 @@ const SigninPage = () => {
   const { data: session } = useSession()
   const router = useRouter()
   const t = useTranslations("signin")
-
-  const [showPassword, setShowPassword] = useState<boolean>(false)
 
   const form = useForm<formData>({
     resolver: zodResolver(signinFormSchema),
@@ -41,6 +40,20 @@ const SigninPage = () => {
     },
   })
 
+  // Effects
+  useEffect(() => {
+    if (session) {
+      router.push("/")
+    }
+  }, [session, router])
+
+  useEffect(() => {
+    if (form.formState.errors) {
+      // TODO: Animates the error message
+    }
+  }, [form.formState.errors])
+
+  // Handlers
   async function onSubmit(data: formData) {
     console.log({ data })
   }
@@ -86,7 +99,13 @@ const SigninPage = () => {
                 <FormItem>
                   <FormLabel>{t("email.title")}</FormLabel>
                   <FormControl>
-                    <Input placeholder={t("email.placeholder")} {...field} />
+                    <Input
+                      placeholder={t("email.placeholder")}
+                      {...field}
+                      className={
+                        form.formState.errors.email ? "animate-shake" : ""
+                      }
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -99,33 +118,36 @@ const SigninPage = () => {
                 <FormItem>
                   <FormLabel>Password</FormLabel>
                   <FormControl>
-                    <PasswordInput {...field} />
+                    <PasswordInput
+                      {...field}
+                      className={
+                        form.formState.errors.password ? "animate-shake" : ""
+                      }
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
             <div className="flex justify-end">
-              <a
-                href="/[locale]/forgot-password"
+              <NavigationLink
+                href="/forgot"
                 className="text-sm text-rose-600 hover:underline"
               >
                 {t("forgot_password")}
-              </a>
+              </NavigationLink>
             </div>
             <Button type="submit" className="bg-gray-950 w-full">
               {t("login")}
             </Button>
             <div className="flex justify-center items-center gap-2">
               <p className="text-sm">{t("not_registered")}</p>
-              <a
-                href="/[locale]/signup"
-                className="text-rose-600 hover:underline"
+              <NavigationLink
+                href="/signup"
+                className="text-sm text-rose-600 hover:underline"
               >
-                <span className="text-sm text-rose-600">
-                  {t("create_account")}
-                </span>
-              </a>
+                {t("create_account")}
+              </NavigationLink>
             </div>
           </form>
         </Form>
