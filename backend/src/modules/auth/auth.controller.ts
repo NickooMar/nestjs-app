@@ -10,8 +10,8 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { FastifyReply } from 'fastify';
-import { CreateUserDto } from 'src/dto/user/create-user.dto';
-import { SignInUserDto } from 'src/dto/user/signin-user.dto';
+import { CreateUserDto } from 'src/modules/users/dto/create-user.dto';
+import { SignInUserDto } from 'src/modules/users/dto/signin-user.dto';
 import { AuthService } from './auth.service';
 import { AuthGuard } from './auth.guard';
 

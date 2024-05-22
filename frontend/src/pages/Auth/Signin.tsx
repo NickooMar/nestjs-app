@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 /* Hooks */
 import { useForm, SubmitHandler } from 'react-hook-form';
 import useAuth from '@/hooks/useAuth';
@@ -17,9 +17,10 @@ type Inputs = {
 };
 
 const Signin = () => {
-  const { handleSignin, profileRequest } = useAuth();
-  const { setToken } = useAuthStore(state => state);
   const { t } = useTranslation();
+  const navigate = useNavigate();
+  const { handleSignin, profileRequest } = useAuth();
+  const { setToken, setProfile } = useAuthStore(state => state);
 
   const {
     register,
@@ -34,11 +35,14 @@ const Signin = () => {
 
   const onSubmit: SubmitHandler<Inputs> = async data => {
     setIsLoading(true);
-    const token = await handleSignin(data);
 
+    const token = await handleSignin(data);
     if (token) setToken(token);
 
-    await profileRequest();
+    const profileResponse = await profileRequest();
+    if (profileResponse) setProfile(profileResponse);
+
+    navigate('/');
 
     setIsLoading(false);
   };

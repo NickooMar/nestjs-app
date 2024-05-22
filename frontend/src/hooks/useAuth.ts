@@ -1,13 +1,15 @@
-import { AxiosError } from 'axios';
+import { AxiosError, HttpStatusCode } from 'axios';
 import { authService } from '@/services/auth.service';
 import { Signup, Signin } from '@/types/auth.types';
 import { toast } from 'sonner';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { useAuthStore } from '@/store/auth.store';
 
 const useAuth = () => {
   const navigate = useNavigate();
   const { t } = useTranslation();
+  const { logout } = useAuthStore(state => state);
 
   const handleSignup = async ({
     email,
@@ -31,10 +33,8 @@ const useAuth = () => {
       return toast.success(t('signup.messages.success.account_created'));
     } catch (error) {
       const axiosError = error as AxiosError;
-      const FOUND = 302;
 
-      // Invalid credentials
-      if (axiosError.response && axiosError.response.status === FOUND) {
+      if (axiosError?.response?.status === HttpStatusCode.Found) {
         return toast.error(t('signup.messages.erros.user_already_exists'));
       }
 
@@ -49,10 +49,8 @@ const useAuth = () => {
       return access_token;
     } catch (error) {
       const axiosError = error as AxiosError;
-      const UNAUTHORIZED = 401;
 
-      // Invalid credentials
-      if (axiosError.response && axiosError.response.status === UNAUTHORIZED) {
+      if (axiosError?.response?.status === HttpStatusCode.Unauthorized) {
         return toast.error(t('signin.messages.errors.unathorized'));
       }
 
@@ -62,18 +60,20 @@ const useAuth = () => {
 
   const profileRequest = async () => {
     try {
-      const response = await authService.profile();
-      console.log({ response });
+      return await authService.profile();
     } catch (error) {
       const axiosError = error as AxiosError;
-
       console.error(axiosError);
-
       return toast.error('Error getting profile');
     }
   };
 
-  return { handleSignin, handleSignup, profileRequest };
+  const handleLogout = () => {
+    logout();
+    navigate('/auth/signin');
+  };
+
+  return { handleSignin, handleSignup, profileRequest, handleLogout };
 };
 
 export default useAuth;

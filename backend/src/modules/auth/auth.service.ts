@@ -3,13 +3,13 @@ import {
   InternalServerErrorException,
   UnauthorizedException,
 } from '@nestjs/common';
-import { CreateUserDto } from 'src/dto/user/create-user.dto';
-import { SignInUserDto } from 'src/dto/user/signin-user.dto';
+import { CreateUserDto } from 'src/modules/users/dto/create-user.dto';
+import { SignInUserDto } from 'src/modules/users/dto/signin-user.dto';
 import { UsersService } from 'src/modules/users/users.service';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
 import { User } from 'src/schemas/user.schema';
-import { User as UserType } from 'src/types/user.type';
+import { User as UserType } from 'src/modules/users/types/user.type';
 
 @Injectable()
 export class AuthService {

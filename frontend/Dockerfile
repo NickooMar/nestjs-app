@@ -1,6 +1,6 @@
 FROM oven/bun
 
-WORKDIR /app
+WORKDIR /app/frontend
 
 # Copy the lock and package file
 COPY bun.lockb . 
@@ -10,6 +10,7 @@ COPY package.json .
 RUN bun install --frozen-lockfile
 
 # Copy your source code
+# If only files in the src folder changed, this is the only step that gets executed!
 COPY . .
 
-CMD ["bun" "run dev"]
+CMD ["bun", "run", "dev"]

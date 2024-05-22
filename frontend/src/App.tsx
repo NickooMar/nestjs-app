@@ -1,4 +1,4 @@
-import Routes from '@/routes/root';
+import Routes from '@/routes';
 import { Toaster } from 'sonner';
 import '@/config/i18n';
 

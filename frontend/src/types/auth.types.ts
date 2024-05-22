@@ -16,3 +16,8 @@ export interface Profile {
   sub: string;
   username: string;
 }
+
+export interface ProtectedRouteProps {
+  children?: React.ReactNode;
+  isAuthenticated: boolean;
+}

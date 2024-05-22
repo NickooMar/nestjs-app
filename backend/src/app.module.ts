@@ -1,5 +1,4 @@
 import { Module } from '@nestjs/common';
-import { TasksModule } from './modules/tasks/tasks.module';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { AuthModule } from './modules/auth/auth.module';
@@ -18,7 +17,7 @@ const configDatabase = MongooseModule.forRootAsync({
 });
 
 @Module({
-  imports: [configModule, configDatabase, TasksModule, AuthModule, UsersModule],
+  imports: [configModule, configDatabase, AuthModule, UsersModule],
   controllers: [],
   providers: [],
 })

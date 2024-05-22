@@ -1,14 +1,20 @@
-# Etapa base
-FROM oven/bun:1 AS base
+FROM oven/bun:1 as base
 
-# Definir directorio de trabajo
-WORKDIR /usr/src/app
+WORKDIR /backend
 
-# Copiar código fuente y package.json
+# Copy the lock and package file
+COPY bun.lockb . 
+COPY package.json . 
+
+# Install dependencies
+RUN bun install --frozen-lockfile
+
+# Copy your source code
+# If only files in the src folder changed, this is the only step that gets executed!
 COPY . .
 
-# Instalar dependencias
-RUN bun install
+COPY .env .env.example ./
 
-# Ejecutar la aplicación en modo desarrollo
+EXPOSE 3000
+
 CMD ["bun", "run", "start:dev"]
