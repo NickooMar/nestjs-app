@@ -5,7 +5,7 @@ import useAuth from '@/hooks/useAuth';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import { BackgroundBeams } from '@/components/BackgroundBeams/BackgroundBeams';
+import { BackgroundBeams } from '@/components/backgroundBeams/BackgroundBeams';
 import { useTranslation } from 'react-i18next';
 
 type Inputs = {

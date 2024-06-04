@@ -2,7 +2,7 @@ import { Route, Routes } from 'react-router-dom';
 import Home from '@/pages/Home/Home';
 import Signin from '@/pages/Auth/Signin';
 import Signup from '@/pages/Auth/Signup';
-import ProtectedRoute from '@/components/Auth/ProtectedRoute';
+import ProtectedRoute from '@/components/auth/ProtectedRoute';
 import { useAuthStore } from '@/store/auth.store';
 
 const Root = () => {

@@ -1,7 +1,7 @@
 import Routes from '@/routes';
 import { Toaster } from 'sonner';
 import '@/config/i18n';
-import { ThemeProvider } from './components/Themes/Theme.provider';
+import { ThemeProvider } from './components/themes/Theme.provider';
 
 const App = () => {
   return (

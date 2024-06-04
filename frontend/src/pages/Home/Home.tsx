@@ -1,7 +1,9 @@
+import useAuth from '@/hooks/useAuth';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import useAuth from '@/hooks/useAuth';
-import Header from '@/components/Header/Header';
+import { Button } from '@/components/ui/button';
+import Header from '@/components/header/Header';
+import { ModeToggle } from '@/components/themes/Theme.toggle';
 
 const Home = () => {
   const { t } = useTranslation();
@@ -11,25 +13,17 @@ const Home = () => {
     <>
       <Header />
       <div className="flex justify-center">
+        <ModeToggle />
+
         <Link to="/auth/signin">
-          <button
-            type="button"
-            className="text-white bg-[#24292F] hover:bg-[#24292F]/90 focus:ring-4 focus:outline-none focus:ring-[#24292F]/50 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-gray-500 dark:hover:bg-[#050708]/30 me-2 mb-2"
-          >
-            {t('home.signin')}
-          </button>
+          <Button variant="outline">{t('home.signin')}</Button>
         </Link>
         <Link to="/auth/signup">
-          <button
-            type="button"
-            className="text-white bg-[#24292F] hover:bg-[#24292F]/90 focus:ring-4 focus:outline-none focus:ring-[#24292F]/50 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-gray-500 dark:hover:bg-[#050708]/30 me-2 mb-2"
-          >
-            {t('home.signup')}
-          </button>
+          <Button variant="outline">{t('home.signup')}</Button>
         </Link>
-        <button type="button" onClick={handleLogout}>
+        <Button variant="outline" onClick={handleLogout}>
           Logout
-        </button>
+        </Button>
       </div>
     </>
   );
