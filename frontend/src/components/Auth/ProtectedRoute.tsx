@@ -1,4 +1,4 @@
-import { ProtectedRouteProps } from '@/types/auth.types';
+import type { ProtectedRouteProps } from '@/types/auth.types';
 import { Navigate, Outlet } from 'react-router-dom';
 
 const ProtectedRoute = ({ children, isAuthenticated }: ProtectedRouteProps) => {

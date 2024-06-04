@@ -1,12 +1,15 @@
 import Routes from '@/routes';
 import { Toaster } from 'sonner';
 import '@/config/i18n';
+import { ThemeProvider } from './components/Themes/Theme.provider';
 
 const App = () => {
   return (
     <>
-      <Toaster richColors position="top-right" duration={3500} />
-      <Routes />
+      <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
+        <Toaster richColors position="top-right" duration={3500} />
+        <Routes />
+      </ThemeProvider>
     </>
   );
 };

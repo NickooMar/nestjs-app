@@ -1,15 +1,11 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-/* Hooks */
-import { SubmitHandler, useForm } from 'react-hook-form';
+import { type SubmitHandler, useForm } from 'react-hook-form';
 import useAuth from '@/hooks/useAuth';
-/* Icons */
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-/* Components */
 import { BackgroundBeams } from '@/components/BackgroundBeams/BackgroundBeams';
-/* Translation */
 import { useTranslation } from 'react-i18next';
 
 type Inputs = {
@@ -174,9 +170,14 @@ const Signup = () => {
             {errors.password && (
               <small className="text-red-500">{errors.password.message}</small>
             )}
-            {password && password.length && (
+            {password?.length && (
               <div
                 onClick={() => setShowPassword(!showPassword)}
+                onKeyDown={event => {
+                  if (event.key === 'Enter') {
+                    setShowPassword(!showPassword);
+                  }
+                }}
                 className="absolute top-8 right-0 pr-3 pt-1 flex items-center text-sm leading-5"
               >
                 {showPassword ? (
@@ -219,9 +220,14 @@ const Signup = () => {
                 {errors.passwordConfirm.message}
               </small>
             )}
-            {passwordConfirm && passwordConfirm.length && (
+            {passwordConfirm?.length && (
               <div
                 onClick={() => setShowPasswordConfirm(!showPasswordConfirm)}
+                onKeyDown={event => {
+                  if (event.key === 'Enter') {
+                    setShowPasswordConfirm(!showPasswordConfirm);
+                  }
+                }}
                 className="absolute top-8 right-0 pr-3 pt-1 flex items-center text-sm leading-5"
               >
                 {showPasswordConfirm ? (

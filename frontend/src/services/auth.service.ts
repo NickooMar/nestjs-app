@@ -1,5 +1,5 @@
-import { Signup, Signin } from '@/types/auth.types';
-import axios, { AxiosInstance } from 'axios';
+import type { Signup, Signin } from '@/types/auth.types';
+import axios, { type AxiosInstance } from 'axios';
 import { authApi } from '@/utils/axios';
 
 class AuthService {

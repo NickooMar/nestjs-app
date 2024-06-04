@@ -1,6 +1,6 @@
-import { AxiosError, HttpStatusCode } from 'axios';
+import { type AxiosError, HttpStatusCode } from 'axios';
 import { authService } from '@/services/auth.service';
-import { Signup, Signin } from '@/types/auth.types';
+import type { Signup, Signin } from '@/types/auth.types';
 import { toast } from 'sonner';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';

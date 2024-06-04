@@ -12,7 +12,7 @@ export default {
         title: "Email",
         required: "Email is required",
         invalid: "Email is not valid",
-        placeholder: "name@company.com",
+        placeholder: "example@email.com",
       },
       password: {
         title: "Password",
@@ -36,7 +36,7 @@ export default {
         title: 'Email',
         required: 'Email is required',
         invalid: 'Email is invalid',
-        placeholder: 'name@example.com',
+        placeholder: 'example@email.com',
       },
       username: {
         title: 'Username',

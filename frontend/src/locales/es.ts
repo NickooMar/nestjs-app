@@ -12,7 +12,7 @@ export default {
         title: 'Correo electrónico',
         required: 'El correo electrónico es requerido',
         invalid: 'El correo electrónico no es válido',
-        placeholder: 'nombre@empresa.com',
+        placeholder: 'example@email.com',
       },
       password: {
         title: 'Contraseña',
@@ -35,7 +35,7 @@ export default {
         title: 'Correo electrónico',
         required: 'El correo electrónico es requerido',
         invalid: 'El correo electrónico no es válido',
-        placeholder: 'nombre@empresa.com',
+        placeholder: 'example@email.com',
       },
       username: {
         title: 'Nombre de usuario',

@@ -1,14 +1,10 @@
 import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-/* Hooks */
-import { useForm, SubmitHandler } from 'react-hook-form';
+import { useForm, type SubmitHandler } from 'react-hook-form';
 import useAuth from '@/hooks/useAuth';
-/* Store */
 import { useAuthStore } from '@/store/auth.store';
-/* Icons */
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
-/* Translation */
 import { useTranslation } from 'react-i18next';
 
 type Inputs = {
@@ -53,7 +49,7 @@ const Signin = () => {
 
   return (
     <div className="flex items-center justify-center h-screen bg-rose-900 dark:bg-[#111827] dark:bg-dot-white/[0.2] bg-dot-black/[0.2]">
-      <div className="absolute pointer-events-none inset-0 flex items-center justify-center  dark:bg-black bg-rose-600 [mask-image:radial-gradient(ellipse_at_center,transparent_40%,black)] opacity-45"></div>
+      <div className="absolute pointer-events-none inset-0 flex items-center justify-center  dark:bg-black bg-rose-600 [mask-image:radial-gradient(ellipse_at_center,transparent_40%,black)] opacity-45" />
       <div className="w-full max-w-xl p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-6 md:p-8 dark:bg-gray-800 dark:border-gray-700 ">
         <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
           <img
@@ -116,6 +112,11 @@ const Signin = () => {
             />
             <div
               onClick={() => setShowPassword(!showPassword)}
+              onKeyDown={event => {
+                if (event.key === 'Enter') {
+                  setShowPassword(!showPassword);
+                }
+              }}
               className="absolute top-8 right-0 pr-3 pt-1 flex items-center text-sm leading-5"
             >
               {showPassword ? (
@@ -127,7 +128,7 @@ const Signin = () => {
           </div>
           <div className="flex items-start">
             <a
-              href="#"
+              href="/"
               className="ms-auto text-sm text-rose-600 hover:underline dark:text-blue-500"
             >
               {t('signin.forgot_password')}
