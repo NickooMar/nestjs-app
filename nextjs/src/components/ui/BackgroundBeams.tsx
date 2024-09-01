@@ -1,15 +1,24 @@
 "use client"
 
-import React from "react"
+import React, { useEffect, useState } from "react"
 import { motion } from "framer-motion"
 import { cn } from "@/lib/cn"
+import { useTheme } from "next-themes"
 
 interface BackgroundBeamsProps {
   className?: string
 }
 
+const beamsThemeColors: { [key: string]: string[] } = {
+  light: ["#F45B69", "#F6E8EA", "#22181C"],
+  dark: ["#18CCFC", "#6344F5", "#AE48FF"],
+}
+
 export const BackgroundBeams = React.memo(
   ({ className }: BackgroundBeamsProps) => {
+    const { theme } = useTheme()
+    const [beamColors, setBeamColors] = useState(beamsThemeColors.light)
+
     const paths = [
       "M-380 -189C-380 -189 -312 216 152 343C616 470 684 875 684 875",
       "M-373 -197C-373 -197 -305 208 159 335C623 462 691 867 691 867",
@@ -62,15 +71,22 @@ export const BackgroundBeams = React.memo(
       "M-44 -573C-44 -573 24 -168 488 -41C952 86 1020 491 1020 491",
       "M-37 -581C-37 -581 31 -176 495 -49C959 78 1027 483 1027 483",
     ]
+
+    useEffect(() => {
+      if (theme && (theme === "light" || theme === "dark")) {
+        setBeamColors(beamsThemeColors[theme])
+      }
+    }, [theme])
+
     return (
       <div
         className={cn(
-          "absolute  h-full w-full inset-0 z-0 [mask-size:40px] [mask-repeat:no-repeat] flex items-center justify-center",
+          "absolute  h-full w-full [mask-size:40px] [mask-repeat:no-repeat] flex items-center justify-center",
           className
         )}
       >
         <svg
-          className=" z-0 h-full w-full pointer-events-none absolute "
+          className="z-0 h-full w-full pointer-events-none absolute"
           width="100%"
           height="100%"
           viewBox="0 0 696 316"
@@ -117,10 +133,14 @@ export const BackgroundBeams = React.memo(
                   delay: Math.random() * 10,
                 }}
               >
-                <stop stopColor="#18CCFC" stopOpacity="0"></stop>
-                <stop stopColor="#18CCFC"></stop>
-                <stop offset="32.5%" stopColor="#6344F5"></stop>
-                <stop offset="100%" stopColor="#AE48FF" stopOpacity="0"></stop>
+                <stop stopColor={beamColors[0]} stopOpacity="0"></stop>
+                <stop stopColor={beamColors[0]}></stop>
+                <stop offset="32.5%" stopColor={beamColors[1]}></stop>
+                <stop
+                  offset="100%"
+                  stopColor={beamColors[2]}
+                  stopOpacity="0"
+                ></stop>
               </motion.linearGradient>
             ))}
 

@@ -2,9 +2,10 @@ import { NextIntlClientProvider, useMessages } from "next-intl"
 import { Inter } from "next/font/google"
 import type { Metadata } from "next"
 import "./globals.css"
-import SessionWrapper from "@/app/components/SessionWrapper"
 
 import { ThemeProvider } from "@/components/theme-provider"
+import Navbar from "../components/Navbar/Navbar"
+import SessionWrapper from "../components/Session/SessionWrapper"
 
 const inter = Inter({ subsets: ["latin"] })
 
@@ -31,13 +32,13 @@ export default function LocaleLayout({
       <html lang={locale} suppressHydrationWarning={true}>
         <body className={inter.className}>
           <NextIntlClientProvider locale={locale} messages={messages}>
-            <nav>nav</nav>
             <ThemeProvider
               attribute="class"
               defaultTheme="system"
               enableSystem
               disableTransitionOnChange
             >
+              <Navbar />
               <div>{children}</div>
             </ThemeProvider>
           </NextIntlClientProvider>

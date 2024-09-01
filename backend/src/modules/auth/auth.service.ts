@@ -59,7 +59,7 @@ export class AuthService {
 
       return { _id: '1', email: '', username: '' };
     } catch (error) {
-      throw new InternalServerErrorException();
+      throw new InternalServerErrorException(error);
     }
   }
 }
