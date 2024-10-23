@@ -1,3 +1,4 @@
+import { use } from "react";
 import { NextIntlClientProvider, useMessages } from "next-intl"
 import { Inter } from "next/font/google"
 import type { Metadata } from "next"
@@ -21,10 +22,17 @@ interface LocaleLayoutProps {
   }
 }
 
-export default function LocaleLayout({
-  children,
-  params: { locale },
-}: Readonly<LocaleLayoutProps>) {
+export default function LocaleLayout(props: Readonly<LocaleLayoutProps>) {
+  const params = use(props.params);
+
+  const {
+    locale
+  } = params;
+
+  const {
+    children
+  } = props;
+
   const messages = useMessages()
 
   return (
