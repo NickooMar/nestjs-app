@@ -1,16 +1,15 @@
-"use client"
+import { Button } from "@/components/ui/button";
+import { useRouter } from "@/navigation";
+import { getLocaleHeader } from "./server";
+import React from "react";
 
-import { Button } from "@/components/ui/button"
-import { useRouter } from "@/navigation"
-
-export default function Index() {
-  const router = useRouter()
+export default async function Index() {
+  const localeHeader = await getLocaleHeader();
 
   return (
     <div>
-      <Button type="button" onClick={() => router.push("/signin")}>
-        Signin
-      </Button>
+      <p>Locale Header: {localeHeader}</p>
+      <Button type="button">Signin</Button>
     </div>
-  )
+  );
 }

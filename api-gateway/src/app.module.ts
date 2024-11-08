@@ -6,7 +6,7 @@ import { AuthModule } from './modules/auth/auth.module';
 
 const configModule = ConfigModule.forRoot({
   isGlobal: true,
-  envFilePath: ['.env', '.env.development'],
+  envFilePath: ['.env.development', '.env'],
 });
 
 @Module({
