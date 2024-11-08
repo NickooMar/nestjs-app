@@ -7,9 +7,8 @@ import { HealthModule } from './health/health.module';
 
 const configModule = ConfigModule.forRoot({
   isGlobal: true,
-  envFilePath: ['.env', '.env.development'],
+  envFilePath: ['.env.development', '.env'],
 });
-
 
 @Module({
   imports: [configModule, AuthModule, HealthModule],
