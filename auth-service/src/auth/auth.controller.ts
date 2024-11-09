@@ -8,10 +8,9 @@ export class AuthController {
 
   @MessagePattern({ cmd: 'login' })
   async handleLogin(data: { username: string; password: string }) {
-    console.log('data', data);
-    // return await this.authService.login({
-    //   username: data.username,
-    //   password: data.password,
-    // });
+    return await this.authService.login({
+      username: data.username,
+      password: data.password,
+    });
   }
 }
